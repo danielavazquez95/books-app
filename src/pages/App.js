@@ -10,8 +10,8 @@ import { BooksList } from './Books/BooksList';
 import { CategoriesForm } from './Categories/CategoriesForm';
 import { CategoriesList } from './Categories/CategoriesList';
 import { Home } from './Home';
-import { PersonForm } from './Person/PersonForm';
-import { PersonsList } from './Person/PersonsList';
+import { PersonForm } from './Persons/PersonForm';
+import { PersonsList } from './Persons/PersonsList';
 
 
 
