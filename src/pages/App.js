@@ -5,13 +5,13 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import { BooksForm } from './Books/BooksForm';
-import { BooksList } from './Books/BooksList';
-import { CategoriesForm } from './Categories/CategoriesForm';
-import { CategoriesList } from './Categories/CategoriesList';
 import { Home } from './Home';
-import { PersonForm } from './Persons/PersonForm';
-import { PersonsList } from './Persons/PersonsList';
+import { BooksForm } from './Books/BooksForm.jsx';
+import { BooksList } from './Books/BooksList.jsx';
+import { CategoriesForm } from './Categories/CategoriesForm.jsx';
+import { CategoriesList } from './Categories/CategoriesList.jsx';
+import { PersonForm } from './Persons/PersonForm.jsx';
+import { PersonsList } from './Persons/PersonsList.jsx';
 
 
 
