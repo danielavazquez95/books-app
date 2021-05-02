@@ -1,76 +1,78 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export const BooksForm = () => {
+
+    const [allPersons, setAllPersons] = useState([]);
+    const [categories, setCategories] = useState([]);
+
+    const initialValue = {
+        nombre: '',
+        descripcion: '',
+        categoria_id: 0,
+        persona_id: null
+    };
+
+    const [values, setValues] = useState(initialValue);
+
+    useEffect(() => {
+        axios.get('https://where-is-my-books.herokuapp.com/api/persona')
+        .then(resp => setAllPersons(resp.data.respuesta));
+
+        axios.get('https://where-is-my-books.herokuapp.com/api/categoria')
+        .then(resp => setCategories(resp.data.respuesta))
+    }, []);
+
+    const handlerSubmit = (e) => {
+        e.preventDefault();
+        axios.post('https://where-is-my-books.herokuapp.com/api/libro', values)
+        .then(resp => console.log(resp))
+        .catch(err => console.log(err))
+        .finally(setValues(initialValue));
+    };
+
+    const handlerChange = (e) => {
+        setValues({...values, [e.target.name]: e.target.value});
+    };
+
+    const handlerCheck = (e) => {
+        setValues({...values, [e.target.name]: Number(e.target.value)});
+    };
     
     return (
-        <div>
-            <div class="content-wrapper">
-                <section class="content-header">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>Libros</h1>
-                            </div>
-                        </div>
+      
+            <div className="bookForm-container">
+                <form className="bookForm" onSubmit={handlerSubmit}>
+                    <h3>Libros</h3>
+                    <div className="form-group">
+                        <label>Nombre</label>
+                        <input name="nombre" onChange={handlerChange} className="form-control" placeholder="Ingresar el nombre"/>
                     </div>
-                </section>
-
-                <section class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-12">
-
-                                <div class="card card-primary">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Formulario de libros</h3>
-                                    </div>
-
-                                    <form>
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Nombre</label>
-                                                <input type="text" class="form-control" id="email" placeholder="Ingresar nombre"></input>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Descripcion</label>
-                                                <input type="text" class="form-control" id="description" placeholder="Ingresar categoria"></input>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Persona</label>
-                                                <select class="form-control">
-                                                    <option>--</option>
-                                                    <option>option 1</option>
-                                                    <option>option 2</option>
-                                                    <option>option 3</option>
-                                                    <option>option 4</option>
-                                                    <option>option 5</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Categoria</label>
-                                                <select class="form-control">
-                                                    <option>option 1</option>
-                                                    <option>option 2</option>
-                                                    <option>option 3</option>
-                                                    <option>option 4</option>
-                                                    <option>option 5</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="card-footer">
-                                            <button type="submit" class="btn btn-primary">Guardar</button>
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </div>
-                        </div>
+                    <div className="form-group">
+                        <label>Descripcion</label>
+                        <textarea name="descripcion" onChange={handlerChange} className="form-control" placeholder="Ingresar la descripción"/>
                     </div>
-                </section>
-
+                    <div className="form-group">
+                        <label >Persona</label>
+                        <select name="persona_id" onChange={handlerCheck} defaultValue="" className="form-control">
+                             <option value="">Click para seleccionar</option>
+                            {
+                                allPersons.map(person => <option key={person.id} value={person.id} >{`${person.nombre} ${person.apellido}`}</option> )
+                            }
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label >Categoria</label>
+                        <select name="categoria_id" onChange={handlerCheck} defaultValue="" className="form-control">
+                            <option value="">Click para seleccionar</option>
+                            {
+                                categories.map(category => <option key={category.id} value={category.id} >{category.nombre}</option> )
+                            }
+                        </select>
+                    </div>
+                    <button className="btn btn-primary btn-form">Guardar</button>
+                </form>
             </div>
-        </div>
+      
     )
-}
+};

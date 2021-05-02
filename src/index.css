@@ -1,13 +1,27 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.bookForm-container{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: #F7F5F5
+  ;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.bookForm{
+  height: max-content;
+  width: 450px;
+  margin-top: 5rem;
+  padding: 35px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+
+}
+
+.form-control{
+  margin: 10px 0px;
+ 
+}
+
+.btn-form{
+  width: 100%;
+  margin-top: 20px;
 }
