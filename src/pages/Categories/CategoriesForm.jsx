@@ -7,46 +7,33 @@ export const CategoriesForm = () => {
     // }
 
     return (
-        <div>
-            <div class="content-wrapper">
-                <section class="content-header">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>Categorias</h1>
+        <div className="bookForm-container">
+            <div class="bookForm">
+
+                <div className="card">
+                    <div className="card-header">
+                        <h3>Categorías</h3>
+                    </div>
+
+                    <div className="card-body">
+                        <div className="form-group">
+                            <label>Nombre</label>
+                            <input name="nombre" className="form-control" placeholder="Ingresar el nombre"/>
+                        </div>
+                    </div>
+                        
+                    <div className="card-footer">
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <a href="/lista-generos" className="btn btn-danger btn-form">Cancelar</a>
+                            </div>
+                            <div className="col-sm-6">
+                                <button className="btn btn-primary btn-form">Guardar</button>
                             </div>
                         </div>
                     </div>
-                </section>
-
-                <section class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-12">
-
-                                <div class="card card-primary">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Formulario de categorias</h3>
-                                    </div>
-
-                                    <form>
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Nombre</label>
-                                                <input type="email" class="form-control" id="category" placeholder="Ingresar categoria"></input>
-                                            </div>
-                                        </div>
-
-                                        <div class="card-footer">
-                                            <button type="submit" class="btn btn-primary">Guardar</button>
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                    
+                </div>
 
             </div>
         </div>

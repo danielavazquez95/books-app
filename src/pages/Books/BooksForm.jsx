@@ -43,34 +43,53 @@ export const BooksForm = () => {
       
             <div className="bookForm-container">
                 <form className="bookForm" onSubmit={handlerSubmit}>
-                    <h3>Libros</h3>
-                    <div className="form-group">
-                        <label>Nombre</label>
-                        <input name="nombre" onChange={handlerChange} className="form-control" placeholder="Ingresar el nombre"/>
+        
+                    <div className="card">
+                        <div className="card-header">
+                            <h3>Libros</h3>
+                        </div>
+                            
+                        <div className="card-body">
+                            <div className="form-group">
+                                <label>Nombre</label>
+                                <input name="nombre" onChange={handlerChange} className="form-control" placeholder="Ingresar el nombre"/>
+                            </div>
+                            <div className="form-group">
+                                <label>Descripcion</label>
+                                <textarea name="descripcion" onChange={handlerChange} className="form-control" placeholder="Ingresar la descripción"/>
+                            </div>
+                            <div className="form-group">
+                                <label >Persona</label>
+                                <select name="persona_id" onChange={handlerCheck} defaultValue="" className="form-control">
+                                    <option value="">Click para seleccionar</option>
+                                    {
+                                        allPersons.map(person => <option key={person.id} value={person.id} >{`${person.nombre} ${person.apellido}`}</option> )
+                                    }
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label >Categoria</label>
+                                <select name="categoria_id" onChange={handlerCheck} defaultValue="" className="form-control">
+                                    <option value="">Click para seleccionar</option>
+                                    {
+                                        categories.map(category => <option key={category.id} value={category.id} >{category.nombre}</option> )
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div className="card-footer">
+                            <div className="row">
+                                <div className="col-sm-6">
+                                    <a href="/lista-libros" className="btn btn-danger btn-form">Cancelar</a>
+                                </div>
+                                <div className="col-sm-6">
+                                    <button className="btn btn-primary btn-form">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="form-group">
-                        <label>Descripcion</label>
-                        <textarea name="descripcion" onChange={handlerChange} className="form-control" placeholder="Ingresar la descripción"/>
-                    </div>
-                    <div className="form-group">
-                        <label >Persona</label>
-                        <select name="persona_id" onChange={handlerCheck} defaultValue="" className="form-control">
-                             <option value="">Click para seleccionar</option>
-                            {
-                                allPersons.map(person => <option key={person.id} value={person.id} >{`${person.nombre} ${person.apellido}`}</option> )
-                            }
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label >Categoria</label>
-                        <select name="categoria_id" onChange={handlerCheck} defaultValue="" className="form-control">
-                            <option value="">Click para seleccionar</option>
-                            {
-                                categories.map(category => <option key={category.id} value={category.id} >{category.nombre}</option> )
-                            }
-                        </select>
-                    </div>
-                    <button className="btn btn-primary btn-form">Guardar</button>
+
                 </form>
             </div>
       

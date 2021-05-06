@@ -2,23 +2,25 @@
   height: 100vh;
   display: flex;
   justify-content: center;
-  background-color: #F7F5F5
+  background-color: #999999
   ;
 }
 
 .bookForm{
   height: max-content;
-  width: 450px;
+  width: 600px;
   margin-top: 5rem;
   padding: 35px;
   background-color: #FFFFFF;
   border-radius: 10px;
-
 }
 
 .form-control{
   margin: 10px 0px;
- 
+}
+
+.btn-form-redirect{
+  text-align: right;
 }
 
 .btn-form{
