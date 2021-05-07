@@ -26,7 +26,9 @@ export const BooksForm = () => {
     const handlerSubmit = (e) => {
         e.preventDefault();
         axios.post('https://where-is-my-books.herokuapp.com/api/libro', values)
-        .then(resp => console.log(resp))
+        .then(resp => {
+            console.log(resp.status)
+        })
         .catch(err => console.log(err))
         .finally(setValues(initialValue));
     };

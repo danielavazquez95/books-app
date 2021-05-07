@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export const CategoriesForm = () => {
 
-    // function handleSubmit(){
+    const initialValue = {
+        nombre: '',
+    };
 
-    // }
+    const [values, setValues] = useState(initialValue);
+
+    const handlerSubmit = (e) => {
+        e.preventDefault();
+        axios.post('https://where-is-my-books.herokuapp.com/api/categoria', values)
+        .then(resp => console.log(resp))
+        .catch(err => console.log(err))
+        .finally(setValues(initialValue));
+    };
+
+    const handlerChange = (e) => {
+        setValues({...values, [e.target.name]: e.target.value});
+    };
 
     return (
-        <div className="bookForm-container">
-            <div class="bookForm">
+        <div className="categoriesForm-container">
+
+            <form className="categoriesForm" onSubmit={handlerSubmit}>
 
                 <div className="card">
                     <div className="card-header">
@@ -18,7 +34,7 @@ export const CategoriesForm = () => {
                     <div className="card-body">
                         <div className="form-group">
                             <label>Nombre</label>
-                            <input name="nombre" className="form-control" placeholder="Ingresar el nombre"/>
+                            <input name="nombre" onChange={handlerChange} className="form-control" placeholder="Ingresar el nombre"/>
                         </div>
                     </div>
                         
@@ -35,7 +51,8 @@ export const CategoriesForm = () => {
                     
                 </div>
 
-            </div>
+            </form>
+
         </div>
     )
 }

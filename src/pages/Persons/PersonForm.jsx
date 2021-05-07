@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export const PersonForm = () => {
+
+    const initialValue = {
+        nombre: '',
+        apellido: '',
+        alias: '',
+        email: ''
+    };
+
+    const [values, setValues] = useState(initialValue);
+
+    const handlerSubmit = (e) => {
+        e.preventDefault();
+        axios.post('https://where-is-my-books.herokuapp.com/api/persona', values)
+        .then(resp => {
+            console.log(resp.status)
+        })
+        .catch(err => console.log(err))
+        .finally(setValues(initialValue));
+    };
+
+    const handlerChange = (e) => {
+        setValues({...values, [e.target.name]: e.target.value});
+    };
+
     return (
-        <div className="bookForm-container">
-            <div class="bookForm">
+        <div className="personForm-container">
+            <form className="personForm" onSubmit={handlerSubmit}>
 
                 <div className="card">
                     <div className="card-header">
@@ -13,19 +38,19 @@ export const PersonForm = () => {
                     <div className="card-body">
                         <div className="form-group">
                             <label>Nombre</label>
-                            <input name="nombre" className="form-control" placeholder="Ingresar el nombre"/>
+                            <input name="nombre" onChange={handlerChange} className="form-control" placeholder="Ingresar el nombre"/>
                         </div>
                         <div className="form-group">
                             <label>Apellido</label>
-                            <input name="apellido" className="form-control" placeholder="Ingresar el apellido"/>
+                            <input name="apellido" onChange={handlerChange} className="form-control" placeholder="Ingresar el apellido"/>
                         </div>
                         <div className="form-group">
                             <label>Alias</label>
-                            <input name="alias" className="form-control" placeholder="Ingresar el alias"/>
+                            <input name="alias" onChange={handlerChange} className="form-control" placeholder="Ingresar el alias"/>
                         </div>
                         <div className="form-group">
                             <label>Email</label>
-                            <input name="email" className="form-control" placeholder="Ingresar el email"/>
+                            <input name="email" onChange={handlerChange} className="form-control" placeholder="Ingresar el email"/>
                         </div>
                     </div>
 
@@ -41,7 +66,7 @@ export const PersonForm = () => {
                     </div>
 
                 </div>
-            </div>
+            </form>
         </div>
     )
 }

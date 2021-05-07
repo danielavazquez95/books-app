@@ -1,4 +1,6 @@
-.bookForm-container{
+.bookForm-container,
+.categoriesForm-container,
+.personForm-container{
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -6,7 +8,9 @@
   ;
 }
 
-.bookForm{
+.bookForm,
+.categoriesForm,
+.personForm{
   height: max-content;
   width: 600px;
   margin-top: 5rem;
