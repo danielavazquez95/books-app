@@ -31,3 +31,22 @@
   width: 100%;
   margin-top: 20px;
 }
+
+
+.booksTable-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #999999
+}
+
+.books-table{
+  height: max-content;
+  width: 88%;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 35px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+}
+

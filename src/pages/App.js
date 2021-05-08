@@ -12,14 +12,13 @@ import { CategoriesForm } from './Categories/CategoriesForm.jsx';
 import { CategoriesList } from './Categories/CategoriesList.jsx';
 import { PersonForm } from './Persons/PersonForm.jsx';
 import { PersonsList } from './Persons/PersonsList.jsx';
-
-
+import { NavBar } from '../components/NavBar';
 
 export const App = () =>  {
 
   return (
-
       <Router>
+        <NavBar/>
         <div>
           <Switch>
               <Route exact path="/lista-personas" component={PersonsList}/>
