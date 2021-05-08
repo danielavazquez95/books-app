@@ -33,14 +33,18 @@
 }
 
 
-.booksTable-container {
-  height: 100%;
+.booksTable-container,
+.personsTable-container,
+.categoriesTable-container {
+  height: 100vh;
   display: flex;
   justify-content: center;
   background-color: #999999
 }
 
-.books-table{
+.books-table,
+.persons-table,
+.categories-table{
   height: max-content;
   width: 88%;
   margin-top: 2rem;
@@ -50,3 +54,10 @@
   border-radius: 10px;
 }
 
+.table-edit-column{
+  width: 100px;
+}
+
+.table-id-column{
+  width: 100px;
+}

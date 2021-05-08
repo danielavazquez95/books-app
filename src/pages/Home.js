@@ -29,6 +29,10 @@ export const Home = () => {
                                         <td>Ricardo Ivan</td>
                                     </tr>
                                     <tr>
+                                        <td>Esparrica</td>
+                                        <td>Diego</td>
+                                    </tr>
+                                    <tr>
                                         <td>Gonzalez</td>
                                         <td>Karen</td>
                                     </tr>

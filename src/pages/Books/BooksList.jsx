@@ -38,6 +38,7 @@ export const BooksList = () => {
     return (
         <div className="booksTable-container">
             <div className="books-table">
+
                 <div className="card">
                     <div className="card-header">
                         <div className="row justify-content-between">
@@ -53,12 +54,12 @@ export const BooksList = () => {
                         <table className="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th className="table-id-column">Id</th>
                                     <th>Nombre</th>
                                     <th>Descripcion</th>
                                     <th>Categoria</th>
                                     <th>Persona prestada</th>
-                                    <th>Editar</th>
+                                    <th className="table-edit-column">Editar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,6 +81,7 @@ export const BooksList = () => {
                         </table>
                     </div>
                 </div>
+                
             </div>
         </div>
     )
