@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
-export const PersonForm = () => {
+export const PersonForm = (props) => {
 
     const initialValue = {
         nombre: '',
@@ -14,12 +15,22 @@ export const PersonForm = () => {
 
     const handlerSubmit = (e) => {
         e.preventDefault();
-        axios.post('https://where-is-my-books.herokuapp.com/api/persona', values)
-        .then(resp => {
-            console.log(resp.status)
-        })
-        .catch(err => console.log(err))
-        .finally(setValues(initialValue));
+        try {
+            axios.post('https://where-is-my-books.herokuapp.com/api/persona', values)
+            .then(resp => {
+                if(resp.status == 200){
+                    props.history.push('/lista-personas');
+                    window.location.reload(false);
+                }else{
+                    alert(resp.data.mensaje)
+                }
+            })
+            .catch(err => console.log(err))
+            .finally(setValues(initialValue));
+        } catch (error) {
+            alert('Hubo un error')
+        }
+        
     };
 
     const handlerChange = (e) => {

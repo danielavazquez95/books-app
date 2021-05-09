@@ -1,20 +1,46 @@
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
+import {Link} from 'react-router-dom';
 
 export const PersonsList = () => {
 
     const [persons, setPersons] = useState([]);
     const history = useHistory();
 
-    useEffect(() => {
-        axios.get('https://where-is-my-books.herokuapp.com/api/persona')
-        .then(resp => setPersons(resp.data.respuesta));
-    }, []);
+    const [error, setError] = React.useState('');
+
+    const traerPersonas = async() => {
+        try {
+            axios.get('https://where-is-my-books.herokuapp.com/api/persona')
+            .then(resp => setPersons(resp.data.respuesta));
+            setError('');
+        } catch(e) {
+            if (e.message=='Network error') {
+                setError('No me pude conectar con el servidor');
+            } else {
+                setError('Otro mensaje que venga del server');
+            }
+        }
+    }
 
     const handlerClick = () => {
         history.push('/formulario-personas');
     };
+
+    React.useEffect(() => {
+        traerPersonas();
+    }, [])
+
+
+    const borrarPersona = async(idPersonaABorrar) => {
+        try {
+            await axios.delete('https://where-is-my-books.herokuapp.com/api/persona/' + idPersonaABorrar)
+            traerPersonas();
+        } catch(e) {
+
+        }
+    }
     
     return (
         <div className="personsTable-container">
@@ -42,6 +68,7 @@ export const PersonsList = () => {
                                     <th>Email</th>
                                     <th>Alias</th>
                                     <th className="table-edit-column">Editar</th>
+                                    <th className="table-edit-column">Eliminar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,7 +81,8 @@ export const PersonsList = () => {
                                             <td>{person.apellido}</td>
                                             <td>{person.email}</td>
                                             <td>{person.alias}</td>
-                                            <td><i className="far fa-edit"/></td>
+                                            <td className="icon"><Link to={"/editar-personas/"+person.id.toString()} className="far fa-edit"></Link></td>
+                                            <td className="icon"><Link onClick={() => borrarPersona(person.id)} className="fas fa-trash"></Link></td>
                                         </tr>
                                     )
                                 })

@@ -12,6 +12,8 @@ import { CategoriesForm } from './Categories/CategoriesForm.jsx';
 import { CategoriesList } from './Categories/CategoriesList.jsx';
 import { PersonForm } from './Persons/PersonForm.jsx';
 import { PersonsList } from './Persons/PersonsList.jsx';
+import { PersonEdit } from './Persons/PersonEdit.jsx';
+import { BookEdit } from './Books/BookEdit.jsx';
 import { NavBar } from '../components/NavBar';
 
 export const App = () =>  {
@@ -21,6 +23,8 @@ export const App = () =>  {
         <NavBar/>
         <div>
           <Switch>
+              <Route exact path="/editar-libros/:id" component={BookEdit}/>
+              <Route exact path="/editar-personas/:id" component={PersonEdit}/>
               <Route exact path="/lista-personas" component={PersonsList}/>
               <Route exact path="/formulario-personas" component={PersonForm} />
               <Route exact path="/lista-generos" component={CategoriesList} />

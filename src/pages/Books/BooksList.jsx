@@ -1,24 +1,34 @@
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
+import {Link} from 'react-router-dom';
 
 export const BooksList = () => {
     const [allBooks, setAllbooks] = useState([]);
     const [categories, setCategories] = useState([]);
     const [persons, setPersons] = useState([]);
     const history = useHistory();
+    const [error, setError] = React.useState('');
 
-    useEffect(() => {
-        axios.get('https://where-is-my-books.herokuapp.com/api/libro')
-        .then(resp => setAllbooks(resp.data.respuesta));
+    const traerPersonas = async() => {
+        try {
+            axios.get('https://where-is-my-books.herokuapp.com/api/libro')
+            .then(resp => setAllbooks(resp.data.respuesta));
 
-        axios.get('https://where-is-my-books.herokuapp.com/api/categoria')
-        .then(resp => setCategories(resp.data.respuesta));
+            axios.get('https://where-is-my-books.herokuapp.com/api/categoria')
+            .then(resp => setCategories(resp.data.respuesta));
 
-        axios.get('https://where-is-my-books.herokuapp.com/api/persona')
-        .then(resp => setPersons(resp.data.respuesta));
-
-    }, []);
+            axios.get('https://where-is-my-books.herokuapp.com/api/persona')
+            .then(resp => setPersons(resp.data.respuesta));
+            setError('');
+        } catch(e) {
+            if (e.message=='Network error') {
+                setError('No me pude conectar con el servidor');
+            } else {
+                setError('Otro mensaje que venga del server');
+            }
+        }
+    }
 
     const findCategoryName = (categories, id) => {
         const category = categories.find(category => category.id === id);
@@ -34,6 +44,19 @@ export const BooksList = () => {
     const handlerClick = () => {
         history.push('/formulario-libros');
     };
+
+    React.useEffect(() => {
+        traerPersonas();
+    }, [])
+
+    const borrarLibro = async(idLibroABorrar) => {
+        try {
+            await axios.delete('https://where-is-my-books.herokuapp.com/api/libro/' + idLibroABorrar)
+            traerPersonas();
+        } catch(e) {
+
+        }
+    }
 
     return (
         <div className="booksTable-container">
@@ -60,6 +83,7 @@ export const BooksList = () => {
                                     <th>Categoria</th>
                                     <th>Persona prestada</th>
                                     <th className="table-edit-column">Editar</th>
+                                    <th className="table-edit-column">Eliminar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,7 +96,8 @@ export const BooksList = () => {
                                             <td>{book.descripcion}</td>
                                             <td>{findCategoryName(categories, book.categoria_id)}</td>
                                             <td>{findPersonName(persons, book.persona_id)}</td>
-                                            <td><i className="far fa-edit"/></td>
+                                            <td><Link to={"/editar-libros/"+book.id.toString()} className="far fa-edit"></Link></td>
+                                            <td className="icon"><Link onClick={() => borrarLibro(book.id)} className="fas fa-trash"></Link></td>
                                         </tr>
                                     )
                                 })
