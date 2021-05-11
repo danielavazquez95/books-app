@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export const CategoriesForm = () => {
+export const CategoriesForm = (props) => {
 
     const initialValue = {
         nombre: '',
@@ -11,10 +11,21 @@ export const CategoriesForm = () => {
 
     const handlerSubmit = (e) => {
         e.preventDefault();
-        axios.post('https://where-is-my-books.herokuapp.com/api/categoria', values)
-        .then(resp => console.log(resp))
-        .catch(err => console.log(err))
-        .finally(setValues(initialValue));
+        try {
+            axios.post('https://where-is-my-books.herokuapp.com/api/categoria', values)
+            .then(resp => {
+                if(resp.data.response == true){
+                    props.history.push('/lista-generos');
+                    setValues(initialValue)
+                    window.location.reload(false);
+                }else{
+                    alert(resp.data.mensaje)
+                }
+            })
+            .catch(err => console.log(err))
+        } catch (error) {
+            alert('Hubo un error '+ error)
+        }
     };
 
     const handlerChange = (e) => {

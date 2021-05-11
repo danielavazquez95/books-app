@@ -14,13 +14,8 @@ export const PersonsList = () => {
         try {
             axios.get('https://where-is-my-books.herokuapp.com/api/persona')
             .then(resp => setPersons(resp.data.respuesta));
-            setError('');
         } catch(e) {
-            if (e.message=='Network error') {
-                setError('No me pude conectar con el servidor');
-            } else {
-                setError('Otro mensaje que venga del server');
-            }
+            alert('Hubo un error '+ error)
         }
     }
 
@@ -38,7 +33,7 @@ export const PersonsList = () => {
             await axios.delete('https://where-is-my-books.herokuapp.com/api/persona/' + idPersonaABorrar)
             traerPersonas();
         } catch(e) {
-
+            alert('Hubo un error '+ error)
         }
     }
     
@@ -67,7 +62,7 @@ export const PersonsList = () => {
                                     <th>Apellido</th>
                                     <th>Email</th>
                                     <th>Alias</th>
-                                    <th className="table-edit-column">Editar</th>
+                                    <th className="table-edit-column">Detalle</th>
                                     <th className="table-edit-column">Eliminar</th>
                                 </tr>
                             </thead>

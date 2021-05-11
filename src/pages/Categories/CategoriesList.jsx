@@ -1,20 +1,40 @@
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
+import {Link} from 'react-router-dom';
 
 export const CategoriesList = () => {
 
     const [categories, setCategories] = useState([]);
+    const [error, setError] = React.useState('');
     const history = useHistory();
 
-    useEffect(() => {
-        axios.get('https://where-is-my-books.herokuapp.com/api/categoria')
-        .then(resp => setCategories(resp.data.respuesta));
-    }, []);
+    const traerCat = async() => {
+        try {
+            axios.get('https://where-is-my-books.herokuapp.com/api/categoria')
+            .then(resp => setCategories(resp.data.respuesta))
+            .catch(err => console.log(err))
+        } catch(error) {
+            alert('Hubo un error '+ error)
+        }
+    }
+
+    React.useEffect(() => {
+        traerCat();
+    }, [])
 
     const handlerClick = () => {
         history.push('/formulario-generos');
     };
+
+    const borrarCat = async(idCatABorrar) => {
+        try {
+            await axios.delete('https://where-is-my-books.herokuapp.com/api/categoria/' + idCatABorrar)
+            traerCat();     
+        } catch(e) {
+
+        }
+    }
 
     return (
         <div className="categoriesTable-container">
@@ -39,7 +59,8 @@ export const CategoriesList = () => {
                                 <tr>
                                     <th className="table-id-column">#</th>
                                     <th>Nombre</th>
-                                    <th className="table-edit-column">Editar</th>
+                                    <th className="table-edit-column">Detalle</th>
+                                    <th className="table-edit-column">Eliminar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,7 +70,8 @@ export const CategoriesList = () => {
                                         <tr key={cat.id} >
                                             <td>{cat.id}</td>
                                             <td>{cat.nombre}</td>
-                                            <td><i className="far fa-edit"/></td>
+                                            <td><Link to={"/editar-generos/"+cat.id.toString()} className="far fa-edit"></Link></td> 
+                                            <td className="icon"><Link onClick={() => borrarCat(cat.id)} className="fas fa-trash"></Link></td>
                                         </tr>
                                     )
                                 })

@@ -20,13 +20,8 @@ export const BooksList = () => {
 
             axios.get('https://where-is-my-books.herokuapp.com/api/persona')
             .then(resp => setPersons(resp.data.respuesta));
-            setError('');
         } catch(e) {
-            if (e.message=='Network error') {
-                setError('No me pude conectar con el servidor');
-            } else {
-                setError('Otro mensaje que venga del server');
-            }
+            alert('Hubo un error '+ error)
         }
     }
 
@@ -82,7 +77,7 @@ export const BooksList = () => {
                                     <th>Descripcion</th>
                                     <th>Categoria</th>
                                     <th>Persona prestada</th>
-                                    <th className="table-edit-column">Editar</th>
+                                    <th className="table-edit-column">Detalle</th>
                                     <th className="table-edit-column">Eliminar</th>
                                 </tr>
                             </thead>

@@ -18,17 +18,17 @@ export const PersonForm = (props) => {
         try {
             axios.post('https://where-is-my-books.herokuapp.com/api/persona', values)
             .then(resp => {
-                if(resp.status == 200){
+                if(resp.data.response == true){
                     props.history.push('/lista-personas');
+                    setValues(initialValue)
                     window.location.reload(false);
                 }else{
                     alert(resp.data.mensaje)
                 }
             })
             .catch(err => console.log(err))
-            .finally(setValues(initialValue));
         } catch (error) {
-            alert('Hubo un error')
+            alert('Hubo un error '+ error)
         }
         
     };

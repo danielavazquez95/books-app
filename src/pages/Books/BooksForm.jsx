@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export const BooksForm = () => {
+export const BooksForm = (props) => {
 
     const [allPersons, setAllPersons] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -25,12 +25,25 @@ export const BooksForm = () => {
 
     const handlerSubmit = (e) => {
         e.preventDefault();
-        axios.post('https://where-is-my-books.herokuapp.com/api/libro', values)
-        .then(resp => {
-            console.log(resp.status)
-        })
-        .catch(err => console.log(err))
-        .finally(setValues(initialValue));
+        if(values.persona_id == null){
+            values.persona_id = '';
+        }
+        try {
+            axios.post('https://where-is-my-books.herokuapp.com/api/libro', values)
+            .then(resp => {
+                if(resp.data.response == true){
+                    props.history.push('/lista-libros');
+                    setValues(initialValue)
+                    window.location.reload(false);
+                }else{
+                    alert(resp.data.mensaje)
+                }
+            })
+            .catch(err => console.log(err))
+        } catch (error) {
+            alert('Hubo un error '+ error)
+        }
+            
     };
 
     const handlerChange = (e) => {

@@ -34,8 +34,8 @@ export const BookEdit = (props) => {
             axios.get('https://where-is-my-books.herokuapp.com/api/persona')
             .then(resp => setPersons(resp.data.respuesta));
 
-        } catch(e) {
-
+        } catch(error) {
+            alert('Hubo un error '+ error)
         }
     }
     
@@ -83,32 +83,57 @@ export const BookEdit = (props) => {
     
 
     const guardar = async() => {
-       // form 
-       await axios.put('https://where-is-my-books.herokuapp.com/api/libro/'+params.id, form);
-       
-       //Analizar si hay que devolver el libro
-       if(form.asignado_id != form.persona_id && form.asignado_id != null) {
-            await axios.put('https://where-is-my-books.herokuapp.com/api/libro/devolver/'+params.id, form);
-            console.log("Libro devuelto");
-       }
 
-       //Analizar si hay que prestarlo
-       if(form.persona_id > 0 && form.asignado_id != form.persona_id){
-            await axios.put('https://where-is-my-books.herokuapp.com/api/libro/prestar/'+params.id, form);
-            console.log("Libro prestado");
-       }
+        //Analizar si hay que devolver el libro
+        if(form.asignado_id != form.persona_id && form.asignado_id != null) {
+            await axios.put('https://where-is-my-books.herokuapp.com/api/libro/devolver/'+params.id, form)
+            .then(resp => {
+                if(resp.data.response == true){
+                    props.history.push('/lista-libros');
+                    window.location.reload(false);
+                }else{
+                    alert(resp.data.mensaje)
+                }
+            })
+            .catch(err => console.log(err))
+            .finally(setForm(initialValue));            
+        }else if(form.persona_id > 0 && form.asignado_id != form.persona_id){
+            //Analizar si hay que prestarlo
+            await axios.put('https://where-is-my-books.herokuapp.com/api/libro/prestar/'+params.id, form)
+            .then(resp => {
+                console.log(resp)
+                if(resp.data.response == true){
+                    props.history.push('/lista-libros');
+                    window.location.reload(false);
+                }else{
+                    alert(resp.data.mensaje)
+                }
+            })
+            .catch(err => console.log(err))
+            .finally(setForm(initialValue));            
+        }else{
+            //Put de descripcion
+            await axios.put('https://where-is-my-books.herokuapp.com/api/libro/'+params.id, form)
+            .then(resp => {
+                if(resp.data.response == true){
+                    props.history.push('/lista-libros');
+                    window.location.reload(false);
+                }else{
+                    alert(resp.data.mensaje)
+                }
+            })
+            .catch(err => console.log(err))
+            .finally(setForm(initialValue));
+        }
 
-       console.log(form);
-
-       props.history.push("/lista-libros");
     }
     return (
-        <div className="libroForm-container">
-            <form className="libroForm"/*  onSubmit={handlerSubmit} */ >
+        <div className="bookForm-container">
+            <form className="bookForm">
 
                 <div className="card">
                     <div className="card-header">
-                        <h3>Libros</h3>
+                        <h3>Datos del libro - Editar</h3>
                     </div>
                     
                     <div className="card-body">
