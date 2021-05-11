@@ -88,43 +88,40 @@ export const BookEdit = (props) => {
         if(form.asignado_id != form.persona_id && form.asignado_id != null) {
             await axios.put('https://where-is-my-books.herokuapp.com/api/libro/devolver/'+params.id, form)
             .then(resp => {
-                if(resp.data.response == true){
-                    props.history.push('/lista-libros');
-                    window.location.reload(false);
-                }else{
+                if(resp.data.response != true){
                     alert(resp.data.mensaje)
                 }
             })
-            .catch(err => console.log(err))
-            .finally(setForm(initialValue));            
-        }else if(form.persona_id > 0 && form.asignado_id != form.persona_id){
+            .catch(err => console.log(err))                       
+        }
+        
+        if(form.persona_id > 0 && form.asignado_id != form.persona_id){
             //Analizar si hay que prestarlo
             await axios.put('https://where-is-my-books.herokuapp.com/api/libro/prestar/'+params.id, form)
             .then(resp => {
                 console.log(resp)
-                if(resp.data.response == true){
-                    props.history.push('/lista-libros');
-                    window.location.reload(false);
-                }else{
-                    alert(resp.data.mensaje)
+                if(resp.data.response != true){
+                   alert(resp.data.mensaje)
                 }
             })
             .catch(err => console.log(err))
-            .finally(setForm(initialValue));            
-        }else{
-            //Put de descripcion
-            await axios.put('https://where-is-my-books.herokuapp.com/api/libro/'+params.id, form)
-            .then(resp => {
-                if(resp.data.response == true){
-                    props.history.push('/lista-libros');
-                    window.location.reload(false);
-                }else{
-                    alert(resp.data.mensaje)
-                }
-            })
-            .catch(err => console.log(err))
-            .finally(setForm(initialValue));
+                      
         }
+
+
+            //Put de descripcion
+        await axios.put('https://where-is-my-books.herokuapp.com/api/libro/'+params.id, form)
+        .then(resp => {
+            if(resp.data.response == true){
+                props.history.push('/lista-libros');
+                window.location.reload(false);
+            }else{
+                alert(resp.data.mensaje)
+            }
+        })
+        .catch(err => console.log(err))
+            
+        
 
     }
     return (
